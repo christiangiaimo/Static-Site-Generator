@@ -1,5 +1,6 @@
 import unittest
 from markdown_blocks import *
+from extract_title import *
 
 
 class TestMarkdownToHTML(unittest.TestCase):
@@ -47,8 +48,7 @@ This is the same paragraph on a new line
         )
 
     def test_markdown_blocks_types(self):
-        md = """
-### This is **bolded** paragraph
+        md = """# This is **bolded** paragraph
 
 
 
@@ -59,10 +59,9 @@ This is the same paragraph on a new line
 - This is a list
 - with items
 """
-        blocks = markdown_to_blocks(md)
-        block_type = block_to_block_type(blocks[0])
+        title = extract_title(md)
 
-        self.assertEqual(block_type,BlockType.HEADING)
+        self.assertEqual(title,"This is **bolded** paragraph")
         
 
 

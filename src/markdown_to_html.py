@@ -76,7 +76,7 @@ def parse_heading(block):
     if i >= n or block[i] != " ":
         return None
     level = i
-    text = block[i+1]
+    text = block[i+1:]
     tag = f"h{level}"
     children = text_to_children(text)
     return ParentNode(tag,children)

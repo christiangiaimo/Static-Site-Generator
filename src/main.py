@@ -1,11 +1,12 @@
 from textnode import TextNode, TextType
 import os
 import shutil
+from generate_page import *
 
 
 def main():
     copy_files_to_dir("~/Desktop/workspace/github.com/christiangiaimo/Static-Site-Generator/static","~/Desktop/workspace/github.com/christiangiaimo/Static-Site-Generator/public")
-
+    generate_pages_recursive("content", "template.html","public")
 
 
 def copy_files_to_dir(source_dir,dest_dir):
