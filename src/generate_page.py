@@ -5,7 +5,7 @@ import os
 
 
 
-def generate_page(from_path,template_path,dest_path):
+def generate_page(from_path,template_path,dest_path,basepath):
     expanded_from_path = os.path.expanduser(from_path)
     full_from_path = os.path.abspath(expanded_from_path)
     expanded_temp_path = os.path.expanduser(template_path)
@@ -23,14 +23,18 @@ def generate_page(from_path,template_path,dest_path):
     text = node.to_html()
     
     modified_template = temp_content.replace("{{ Title }}",title).replace("{{ Content }}",text)
-    
+    modified_href_src = modified_template.replace('href="/',f'href="{basepath}').replace('src="/',f'src="{basepath}')
+
     if not os.path.exists(full_dest_path):
         os.makedirs(dest_dir,exist_ok= True)
     with open (full_dest_path,'w',encoding='utf-8') as dest_file:
-        dest_file.write(modified_template)
+        dest_file.write(modified_href_src)
 
 
-def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
+    
+
+
+def generate_pages_recursive(dir_path_content, template_path, dest_dir_path,basepath):
     expanded_from_path = os.path.expanduser(dir_path_content)
     full_from_path = os.path.abspath(expanded_from_path)
     expanded_dest_path = os.path.expanduser(dest_dir_path)
@@ -42,12 +46,17 @@ def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
         full_path = os.path.join(full_from_path,file)
         full_dest_file_path = os.path.join(full_dest_path,os.path.splitext(file)[0]+ ".html")
         if os.path.isdir(full_path):   
-            generate_pages_recursive(full_path,template_path,os.path.join(full_dest_path,file))
+            generate_pages_recursive(full_path,template_path,os.path.join(full_dest_path,file),basepath)
         elif os.path.isfile(full_path) and os.path.splitext(file)[1] == ".md": 
-            print(f"creating {file}.html file")     
-            generate_page(full_path,template_path,full_dest_file_path)
+            print(f"creating {file} file")     
+            
+            name_no_ext, ext = os.path.splitext(file)
+            dest_file = f"{name_no_ext}.html"  # si file es "index.md" -> "index.html"
+            full_dest_file_path = os.path.join(full_dest_path, dest_file)
+            generate_page(full_path, template_path, full_dest_file_path, basepath)
         else:
-            print("skipping unknown file")     
+            print("skipping unknown file") 
+                
 
 
 

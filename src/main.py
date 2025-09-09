@@ -2,11 +2,19 @@ from textnode import TextNode, TextType
 import os
 import shutil
 from generate_page import *
+import sys
+
+
+if len(sys.argv) > 1:
+    basepath = sys.argv[1]
+else:
+    basepath = "/"   
 
 
 def main():
+     
     copy_files_to_dir("~/Desktop/workspace/github.com/christiangiaimo/Static-Site-Generator/static","~/Desktop/workspace/github.com/christiangiaimo/Static-Site-Generator/public")
-    generate_pages_recursive("content", "template.html","public")
+    generate_pages_recursive("content", "template.html","docs",basepath)
 
 
 def copy_files_to_dir(source_dir,dest_dir):
@@ -40,7 +48,6 @@ def copy_files_to_dir(source_dir,dest_dir):
         else:
             print(f"skipping unknown item {file}")    
         
-
 
 
 main()
