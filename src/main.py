@@ -13,7 +13,7 @@ else:
 
 def main():
      
-    copy_files_to_dir("~/Desktop/workspace/github.com/christiangiaimo/Static-Site-Generator/static","~/Desktop/workspace/github.com/christiangiaimo/Static-Site-Generator/public")
+    copy_files_to_dir("~/Desktop/workspace/github.com/christiangiaimo/Static-Site-Generator/static","~/Desktop/workspace/github.com/christiangiaimo/Static-Site-Generator/docs")
     generate_pages_recursive("content", "template.html","docs",basepath)
 
 
